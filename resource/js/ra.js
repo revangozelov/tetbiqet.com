@@ -933,11 +933,9 @@ var Content = {
                 </svg>
                 </a>
                 <nav id="navbar" class="navbar">
-                <ul class="ul-menus">
-                    <li class="dropdown"><button data-toggle="modal" data-target="#service-login" class="btn service-login-link bg-color-green">Daxil ol <i
-                        class="bi bi-chevron-down"></i></button> 
-                    </li>
-                </ul>
+                <button data-toggle="modal" data-target="#service-login" class="btn service-login-link bg-color-green">Daxil ol <i
+                        class="bi bi-chevron-down"></i></button>
+
                 <div class="navbar-custom-menu" style="display: none;">
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu show">
