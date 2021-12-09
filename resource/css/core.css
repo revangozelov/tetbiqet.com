@@ -1,0 +1,115 @@
+ 
+
+li.category-list-item{
+    padding:7px 7px !important;
+    text-align: left;
+    align-items: center;
+    cursor: pointer;
+}
+
+li.category-list-item.active{
+    background-color: lightsteelblue;
+}
+
+.card-category{
+    color:gray;
+}
+
+.category-list-item-count{
+    padding: 2px 5px;
+    border-radius: 15px;
+    background-color: #f5f5f5;
+    color:#474a48;
+}
+
+.service-details-heading{
+    font-size: 28px; 
+}
+
+div.container-hole{
+    padding: 100px 50px 0px 50px;
+}
+
+.service-details-tabulation-item{
+    cursor:pointer;
+    font-size: 16px;
+    border-radius:5px;
+    max-width: 250px;
+    padding:5px 8px;
+    background-color: lightsteelblue;
+}
+
+
+.service-details-tabulation-item.active{
+   
+    background-color: mediumaquamarine !important;
+}
+
+.service-details-tabulation-section{
+    padding-top:100px;
+}
+
+.single-card-info{
+    padding-top:100px;  
+}
+
+.service-details-content{
+    padding-top:55px;  
+}
+
+.service-registration-link{
+    color:white;
+    cursor: pointer;
+}
+
+.registration-must-know{
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    padding: 5px;
+    width: max-content;
+    margin-right: 10px;
+    margin-bottom: 4px;
+
+}
+
+.reg-span{
+    font-size: 14px;
+    margin-top:20px;
+}
+
+.reg-span{
+    font-size: 14px;
+    margin-bottom:10px;
+}
+.registration-heading{
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.registration-heading-qeyd{
+    padding-bottom: 20px;
+}
+.registration-i-know-list-item-span{
+    border-radius: 6px;
+    padding: 5px;
+    width: max-content;
+    margin-right: 10px;
+    background-color: #f5f5f5b7;
+    margin-bottom: 4px;
+}
+
+.registration-roles-item-span{
+    border-radius: 6px;
+    padding: 5px;
+    width: max-content;
+    margin-right: 10px;
+    background-color: #f5f5f5;
+    margin-bottom: 4px;
+}
+
+.apd-form-error-msg{
+    background-color: red;
+    color: white;
+    margin: 5px 6px;
+    border-radius: 15px;
+}
