@@ -1566,6 +1566,7 @@ button.createbtn i {
   margin-top: 20px;
   background-color: #f5f5f5;
   border-radius: 5px;
+  padding:0px !important;
 }
 
 .catagory-headline {
@@ -2248,15 +2249,17 @@ start book section
   text-align: left;
   margin-bottom: 0px;
   cursor: pointer;
+  color: darkslategray;
 }
 
 .card-container .card-dates {
-  font-size: 15px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 200;
   line-height: 17px;
   /* letter-spacing: 0em; */
   text-align: left;
+  padding-top:10px;
   margin-bottom: 9px !important;
 }
 
@@ -2276,9 +2279,9 @@ start book section
 }
 
 .card-container .numbers-old {
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 300;
+  font-size: 15px;
+  /* font-style: normal; */
+  font-weight: 500;
   line-height: 26px;
   text-align: left;
   text-decoration: line-through;
@@ -2488,18 +2491,20 @@ p.language {}
 
 .footer-section {
   background-color: hsla(162, 62%, 4%, 0.8);
-  margin-top: 5rem;
-  height: 18.75rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  margin-top: 6rem;
+  height: 10.75rem;
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr; */
+  padding-top: 4.5rem;
 }
 
 .footer-left {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  color: white;
   gap: 1rem;
+  font-size: 20px;
 }
 
 .footer-left p {
@@ -2660,7 +2665,7 @@ p.language {}
 }
 
 .card-catagories {
-  height: 48px;
+  height: 38px;
   display: flex;
 }
 .card-catagories-left {
@@ -2699,11 +2704,11 @@ p.language {}
 }
 .hero-box-center img {
   position: absolute;
-  top: 134px;
+  top: 129px;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 6.25rem;
-  width: 3rem;
-  height: 3rem;
+  width: 38px;
+  height: 38px;
   border: solid #1f8a70;
 }

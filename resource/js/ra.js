@@ -30,11 +30,11 @@ var SingleCard = {
     },
     Item: function () {
         return $('<div>').addClass('col-lg-3 col-sm-2 col-md-4')
-              .append($("<div>")
-                       .addClass('card-container')
-            .append(SingleCard.Content.Image())
-            .append(SingleCard.Content.Category())
-            .append(SingleCard.Content.Item()))
+            .append($("<div>")
+                .addClass('card-container')
+                .append(SingleCard.Content.Image())
+                .append(SingleCard.Content.Category())
+                .append(SingleCard.Content.Item()))
 
     },
     Content: {
@@ -42,7 +42,7 @@ var SingleCard = {
             return $('<div>').addClass("card-content")
                 .append(SingleCard.Content.Header())
                 //.append()
-               // .append(SingleCard.Content.Service())
+                // .append(SingleCard.Content.Service())
                 .append(SingleCard.Content.StartDate())
                 .append(SingleCard.Content.Language())
                 .append(SingleCard.Content.Price())
@@ -56,10 +56,12 @@ var SingleCard = {
                     </div>`;
         },
         Header: function () {
-            return $('<h3>')
-                .attr('sid', SingleCard.Data.SID)
-                .addClass("card_header")
-                .text(SingleCard.Data.Title);
+            return $('<a href="#">')
+                .addClass("card-header-item-link")
+                .append($('<h3>')
+                    .attr('sid', SingleCard.Data.SID)
+                    .addClass("card_header")
+                    .text(SingleCard.Data.Title));
         },
         Etrafli: function () {
             return `<div class="card-bottom-etrafli">
@@ -76,7 +78,9 @@ var SingleCard = {
             return `<p class="card-service">${SingleCard.Data.Service}</b> </p>`;
         },
         StartDate: function () {
-            return `<p class="card-dates">Təqribi başlama tarixi <b>${SingleCard.Data.StartDate}</b> </p>`;
+            return `<p class="card-dates text-left" title='Təqribi başlağa tarixi'>
+                            <i class='fa fa-calendar'></i>
+                             <b>${SingleCard.Data.StartDate}</b> </p>`;
         },
         Language: function () {
             return `<p class="language">Dil: ${SingleCard.Data.Dil}</p>`
@@ -94,8 +98,12 @@ var SingleCard = {
                     </div>`
         },
         User: function () {
+            // return `<div class="hero-box-center">
+            //             <img data-toggle="popover" data-placement='bottom' data-content="${SingleCard.Data.UserName}" data-trigger="hover" src="${SingleCard.Data.UserImage}">
+            //         </div>`
+
             return `<div class="hero-box-center">
-                        <img data-toggle="popover" data-placement='bottom' data-content="${SingleCard.Data.UserName}" data-trigger="hover" src="${SingleCard.Data.UserImage}">
+                        <img data-toggle="popover" data-placement='bottom' src="img/tatbiget-single-logo.png">
                     </div>`
         }
     }
@@ -318,8 +326,9 @@ var ServiceDetail = {
             $(el).attr('disabled', true);
             $(el).attr('readonly', true);
             call('21120809433404628273', data, true, function (res) {
-                $('#serviceRegistration').modal('hide');
-                Toaster.showMessage("Qeydiyyat müvəffəqiyyətlə tamamlanmışdır. Bu istiqamət üzrə əməkdaşımız sizinlə əlaqə yaradacaqdır.")
+                $(el).remove();
+                $('.registration-row')
+                    .html("Qeydiyyat müvəffəqiyyətlə tamamlanmışdır. Bu istiqamət üzrə əməkdaşımız sizinlə əlaqə yaradacaqdır.")
             })
         },
         AddMustKnow: function (mustKnow) {
@@ -375,6 +384,7 @@ var ServiceDetail = {
                     SingleCard.Data.Title = o.title;
                     SingleCard.Data.StartDate = Utility.convertDate(o.startDate);
                     SingleCard.Data.Category = o.categoryName;
+                    SingleCard.Data.serviceName = o.serviceName;
                     SingleCard.Data.EtrafliLink = '';
                     SingleCard.Data.Dil = o.language;
                     SingleCard.Data.Qiymet = o.finalPrice;
@@ -382,7 +392,7 @@ var ServiceDetail = {
                     SingleCard.Data.UserImage = o.logo;
                     SingleCard.Data.UserName = o.fullName;
                     var card = SingleCard.Item();
-                      $(card).removeClass('col-lg-3  col-sm-2 col-md-4')
+                    $(card).removeClass('col-lg-3  col-sm-2 col-md-4')
                     $('.single-card-info').append(card);
 
                     $('.service-details-heading').text(o.title);
@@ -398,7 +408,8 @@ var ServiceDetail = {
             function (res) {
                 var tpc = $('.service-details-tabulation-section');
                 tpc.html('<h6>Bu sorğu üzrə heç bir məzmun tapılmadı</h6>');
-                var obj = res.tbl[0].r;
+                var idx = getIndexOfTable(res,'Response');
+                var obj = res.tbl[idx].r;
                 tpc.html('');
                 for (var i = 0; i < obj.length; i++) {
                     var o = obj[i];
@@ -421,6 +432,7 @@ var Container = {
     CurrentCategory: '',
 
     ServiceSection: {
+
         Init: function () {
             this.Call();
         },
@@ -443,6 +455,7 @@ var Container = {
                         SingleCard.Data.Title = o.title;
                         SingleCard.Data.StartDate = Utility.convertDate(o.startDate);
                         SingleCard.Data.Category = o.categoryName;
+                        SingleCard.Data.Service = ServceType[o.serviceType];
                         SingleCard.Data.EtrafliLink = '';
                         SingleCard.Data.Dil = o.language;
                         SingleCard.Data.Qiymet = o.finalPrice;
@@ -451,6 +464,7 @@ var Container = {
                         SingleCard.Data.UserName = o.fullName;
                         var card = SingleCard.Item();
                         $('.single-card-section-list').append(card);
+                        $('#single-card-section-list-hidden').focus();
                     }
                     $('[data-toggle="popover"]').popover()
                 })
@@ -573,6 +587,7 @@ $(document).on('click', '.tab-section-main', function () {
     Container.CurrentCategory = '';
     Container.CurrentService = key;
     Container.CategorySection.Init(key);
+    $('#single-card-section-list-hidden').focus();
     Container.ServiceSection.Init();
 })
 
@@ -589,7 +604,6 @@ $(document).on('click', '.service-details-tabulation-item', function () {
 
 
 $(document).on('click', '.registration-register', function () {
-
     ServiceDetail.Registration.Do(this);
 })
 
@@ -787,37 +801,37 @@ var Content = {
                                 </button>
                                 </div>
                                 <div class="modal-body" style="font-size: 14px;">
-                                <div class="row">
+                                <div class="row registration-row">
                                     <div class="col-12  registration-heading" service-id=''></div>
                                     <div class="col-12  registration-heading-category" hidden></div>
                                     <div class="col-12   registration-heading-service-type" hidden></div>
                                     
-                                    <div class="col-6">
+                                    <div class="col-lg-6">
                                     <span class='reg-span'>Ad</span>
                                     <input class="form-control" id='registration-name'>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-lg-6">
                                     <span class='reg-span'>Soyad</span>
                                     <input class="form-control" id='registration-surname'>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-lg-6">
                                     <span class='reg-span'>Email</span>
                                     <input class="form-control" id='registration-email'>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-lg-3">
                                     <span class='reg-span'>Mobil</span>
                                     <input class="form-control" id='registration-mobil'>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-lg-3">
                                     <span class='reg-span'>WhatsApp nömrə</span>
                                     <input class="form-control" id='registration-whatsapp'>
                                     </div>
 
-                                    <div class="col-6">
+                                    <div class="col-lg-6">
                                     <span class='reg-span'>Təşkilat</span>
                                     <input class="form-control" id='registration-organization'>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-lg-6">
                                     <span class='reg-span'>Vəzifə</span>
                                     <input class="form-control" id='registration-position'>
                                     </div>
@@ -868,32 +882,10 @@ var Content = {
                             </div>
                         </div>`,
     Footer: ` <div class="footer-left">
-                <p>Bizi təqib et</p>
-                <div class="social-icons">
-                <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                    <path
-                        d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z">
-                    </path>
-                </svg>
-                <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                    <path
-                        d="M21.231 0h-18.462c-1.529 0-2.769 1.24-2.769 2.769v18.46c0 1.531 1.24 2.771 2.769 2.771h18.463c1.529 0 2.768-1.24 2.768-2.771v-18.46c0-1.529-1.239-2.769-2.769-2.769zm-9.231 7.385c2.549 0 4.616 2.065 4.616 4.615 0 2.549-2.067 4.616-4.616 4.616s-4.615-2.068-4.615-4.616c0-2.55 2.066-4.615 4.615-4.615zm9 12.693c0 .509-.413.922-.924.922h-16.152c-.511 0-.924-.413-.924-.922v-10.078h1.897c-.088.315-.153.64-.2.971-.05.337-.081.679-.081 1.029 0 4.079 3.306 7.385 7.384 7.385s7.384-3.306 7.384-7.385c0-.35-.031-.692-.081-1.028-.047-.331-.112-.656-.2-.971h1.897v10.077zm0-13.98c0 .509-.413.923-.924.923h-2.174c-.511 0-.923-.414-.923-.923v-2.175c0-.51.412-.923.923-.923h2.174c.511 0 .924.413.924.923v2.175z"
-                        fill-rule="evenodd" clip-rule="evenodd"></path>
-                </svg>
-                <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                    <path
-                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
-                    </path>
-                </svg>
-                </div>
-            </div>
-            <div class="footer-right">
-                <h5>Əlaqə</h5>
-                <p>Email - <br> contact@gmail.com</p>
-                <p>Telefon - <br>070 525 40 39</p>
-                <p>Ünvan - <br>Yusif Vəzir Çəmənzəminli 73,<br>
-                AZ1069, Bakı, Azərbaycan
-                </p>
+                <span><i class='fa fa-envelope-o'></i> info@tatbiget.com</span>
+                <span><i class='fa fa-mobile'></i> +994 (70) 525 40 39</span>
+                <span><i class="fa fa-address-card-o" aria-hidden="true"></i> Yusif Vəzir Çəmənzəminli 73, AZ1069, Bakı, Azərbaycan
+                </span>
             </div>`,
     Header: `<div class="container-fluid  d-flex align-items-center justify-content-between">
                 <a href="index.html" class="logo d-flex align-items-center">
@@ -950,7 +942,7 @@ var Content = {
                             <!-- The user image in the menu -->
                             <li href="index-main.html?&point=profile" class="user-header">
                                 <img src="img/userprofile.png" class="img-circle" id="user_index_img_large" alt="User Image">
-                                <p id="name_index_block">revan </p>
+                                <p id="name_index_block"> </p>
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
@@ -972,21 +964,18 @@ var Content = {
             </div>`,
     Couresel: `<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class=""></li>
-                        <li data-target="#carouselExampleCaptions" data-slide-to="1" class="active"></li>
-                        <li data-target="#carouselExampleCaptions" data-slide-to="2" class=""></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1" class=""></li>
+                        
+
                         </ol>
                         <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="img/sliderimg/1.png" />
+                            <img class="d-block w-100" src="img/sliderimg/2.png" />
                         </div>
                         <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/1.png" /></div>
                         <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/2.png" /></div>
-                        <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/3.png" /></div>
-                        <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/4.png" /></div>
-                        <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/5.png" /></div>
-                        <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/6.png" /></div>
-                        <div class="carousel-item"><img class="d-block w-100" src="img/sliderimg/7.png" /></div>
+                        
                         <!-- <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&amp;bg=666&amp;fg=444&amp;text=Second slide" alt="Second slide [800x400]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17d669affe5%20text%20%7B%20fill%3A%23444%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17d669affe5%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23666%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22247.31874084472656%22%20y%3D%22217.76000022888184%22%3ESecond%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>Second slide label</h5>
@@ -1035,7 +1024,10 @@ var Content = {
                           </div>
                           <div class="profile-body p-0 col-md-10 col-sm-12 col-lg-10">
                              <div class="profile-history tab" style="display: block;">
+                             <a href='#' type='text' style="width:0px;height:0px;opacity:0;" 
+                              id='single-card-section-list-hidden'>_</a>
                                 <div class="d-flex flex-wrap single-card-section-list">
+                                
                                 </div>
                              </div>
                           </div>
