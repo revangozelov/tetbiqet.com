@@ -598,6 +598,9 @@ $(document).on('click', '.service-details-tabulation-item', function () {
     var pid = $(this).attr('pid');
     var body = ServiceDetail.TopicListObject[pid].topicBody;
     $('.service-details-content').html(body);
+    $('html,body').animate({
+        scrollTop: $(".service-details-content").offset().top},
+        'slow');
 
 })
 

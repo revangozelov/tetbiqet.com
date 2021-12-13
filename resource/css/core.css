@@ -37,6 +37,8 @@ div.container-hole{
     max-width: 250px;
     padding:5px 8px;
     background-color: lightsteelblue;
+    margin: auto;
+    margin-bottom: 1rem;
 }
 
 
@@ -45,7 +47,7 @@ div.container-hole{
     background-color: mediumaquamarine !important;
 }
 
-.service-details-tabulation-section{
+/* .service-details-tabulation-section{
     padding-top:100px;
 }
 
@@ -56,7 +58,7 @@ div.container-hole{
 .service-details-content{
     padding-top:55px;  
 }
-
+ */
 .service-registration-link{
     color:white;
     cursor: pointer;
