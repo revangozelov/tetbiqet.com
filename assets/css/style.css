@@ -2488,18 +2488,20 @@ p.language {}
 
 .footer-section {
   background-color: hsla(162, 62%, 4%, 0.8);
-  margin-top: 5rem;
-  height: 18.75rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  margin-top: 6rem;
+  /* height: 10.75rem; */
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr; */
+  /* padding-top: 4.5rem; */
+  width: 100%;
 }
 
 .footer-left {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  color: white;
   gap: 1rem;
+  font-size: 20px;
+  text-align: center;
 }
 
 .footer-left p {
